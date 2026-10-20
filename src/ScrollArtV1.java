@@ -3,7 +3,7 @@ import java.util.Random;
 public class ScrollArtV1 {
     static final int WIDTH = getTerminalWidth() - 1;
     static final int BUNNY_WIDTH = 8;
-    static final int BUNNY_HEIGHT = 6;
+    static final int BUNNY_HEIGHT = 9;
     static final Random rand = new Random();
 
     public static void main(String[] args) throws InterruptedException {
@@ -14,22 +14,29 @@ public class ScrollArtV1 {
             nextRows[i] = emptyRow();
         }
 
-        while (true) {
-            // At each column on the top row, 1% chance to add a new image
-            for (int x = 0; x < WIDTH - BUNNY_WIDTH; x++) {
-                if (rand.nextDouble() < 0.01) {
-                    loadNextRowsWithImage(nextRows, x);
-                }
+        char[][] image = getBunny(); // Preload bunny image
+        for (int y = 0; y < BUNNY_HEIGHT; y++) {
+            for (int x = 0; x < BUNNY_WIDTH; x++) {
+                System.out.print(image[y][x]);
             }
-            // Print and remove the top row
-            System.out.println(new String(nextRows[0]));
-            // Shift all rows up
-            shiftRowsUp(nextRows);
-            Thread.sleep(40); // Delay in ms
-            long time = System.currentTimeMillis() - startTime;
-            iterations++;
-            System.err.println("average time per frame: " + (time / iterations) + " ms");
+            System.out.println();
         }
+        // while (true) {
+        //     // At each column on the top row, 1% chance to add a new image
+        //     for (int x = 0; x < WIDTH - BUNNY_WIDTH; x++) {
+        //         if (rand.nextDouble() < 0.01) {
+        //             loadNextRowsWithImage(nextRows, x);
+        //         }
+        //     }
+        //     // Print and remove the top row
+        //     System.out.println(new String(nextRows[0]));
+        //     // Shift all rows up
+        //     shiftRowsUp(nextRows);
+        //     Thread.sleep(40); // Delay in ms
+        //     long time = System.currentTimeMillis() - startTime;
+        //     iterations++;
+        //     System.err.println("average time per frame: " + (time / iterations) + " ms");
+        // }
     }
 
     private static void loadNextRowsWithImage(char[][] nextRows, int x) {
@@ -71,31 +78,30 @@ public class ScrollArtV1 {
             }
         }
         // then fill individual characters
-        img[0][0] = '(';
-        img[0][1] = '\\';
-        img[0][2] = '(';
-        img[0][3] = '\\';
-        img[1][0] = '(';
-        img[1][1] = '-';
-        img[1][2] = '.';
-        img[1][3] = '-';
-        img[1][4] = ')';
-        img[2][0] = 'o';
-        img[2][1] = '_';
-        img[2][2] = '(';
-        img[2][3] = '"';
-        img[2][4] = ')';
-        img[2][5] = '(';
-        img[2][6] = '"';
-        img[2][7] = ')';
+        img[0][2] = 'O';
+        img[1][3] = 'O';
+        img[2][2] = '/';
+        img[2][3] = '\\';
+        img[2][4] = '/';
+        img[2][5] = '\\';
         img[3][1] = '/';
-        img[3][4] = '\\';
+        img[3][3] = 'X';
+        img[3][6] = '\\';
         img[4][1] = '\\';
-        img[4][2] = '\\';
-        img[4][3] = '/';
-        img[4][4] = '/';
+        img[4][6] = '/';
         img[5][2] = '\\';
-        img[5][3] = '/';
+        img[5][5] = '/';
+        img[6][5] = '\\';
+        img[6][2] = '/';
+        img[7][1] = '/';
+        img[7][6] = '\\';
+        img[8][1] = '-';
+        img[8][2] = '-';
+        img[8][3] = '-';
+        img[8][4] = '-';
+        img[8][5] = '-';
+        img[8][6] = '-';
+        img[8][7] = '-';
 
         return img;
     }
